@@ -1,6 +1,6 @@
-package me.equaferrous.mcminigame.utility;
+package me.equaferrous.stockedup.utility;
 
-import me.equaferrous.mcminigame.Main;
+import me.equaferrous.stockedup.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

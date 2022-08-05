@@ -1,9 +1,9 @@
-name: McMinigame
+name: StockedUp
 version: 0.0.0
 author: EquaFerrous
-main: me.equaferrous.mcminigame.Main
+main: me.equaferrous.stockedup.Main
 api-version: 1.19
-description: Provides the functionality for the shop coop minigame.
+description: Provides the functionality for the StockedUp! minigame.
 permissions:
   gameAdmin:
     description: Gives access to commands to assist with running the game.

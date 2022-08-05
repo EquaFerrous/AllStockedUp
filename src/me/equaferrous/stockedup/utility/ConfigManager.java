@@ -1,7 +1,6 @@
-package me.equaferrous.mcminigame.utility;
+package me.equaferrous.stockedup.utility;
 
-import me.equaferrous.mcminigame.Main;
-import org.bukkit.Bukkit;
+import me.equaferrous.stockedup.Main;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

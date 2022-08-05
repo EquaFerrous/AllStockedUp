@@ -1,4 +1,4 @@
-package me.equaferrous.mcminigame.utility;
+package me.equaferrous.stockedup.utility;
 
 import org.bukkit.Location;
 

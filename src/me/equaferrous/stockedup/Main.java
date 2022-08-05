@@ -1,6 +1,6 @@
-package me.equaferrous.mcminigame;
+package me.equaferrous.stockedup;
 
-import me.equaferrous.mcminigame.utility.MessageSystem;
+import me.equaferrous.stockedup.utility.MessageSystem;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
