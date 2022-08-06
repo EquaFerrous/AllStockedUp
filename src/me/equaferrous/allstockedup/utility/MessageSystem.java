@@ -1,6 +1,6 @@
-package me.equaferrous.stockedup.utility;
+package me.equaferrous.allstockedup.utility;
 
-import me.equaferrous.stockedup.Main;
+import me.equaferrous.allstockedup.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

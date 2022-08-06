@@ -1,4 +1,4 @@
-package me.equaferrous.stockedup.utility;
+package me.equaferrous.allstockedup.utility;
 
 import org.bukkit.Location;
 

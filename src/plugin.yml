@@ -1,9 +1,9 @@
-name: StockedUp
+name: AllStockedUp
 version: 0.0.0
 author: EquaFerrous
-main: me.equaferrous.stockedup.Main
+main: me.equaferrous.allstockedup.Main
 api-version: 1.19
-description: Provides the functionality for the StockedUp! minigame.
+description: Provides the functionality for the All Stocked Up! minigame.
 permissions:
   gameAdmin:
     description: Gives access to commands to assist with running the game.

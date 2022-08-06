@@ -1,6 +1,6 @@
-package me.equaferrous.stockedup;
+package me.equaferrous.allstockedup;
 
-import me.equaferrous.stockedup.utility.MessageSystem;
+import me.equaferrous.allstockedup.utility.MessageSystem;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
