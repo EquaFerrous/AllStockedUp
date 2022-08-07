@@ -1,6 +1,9 @@
 package me.equaferrous.allstockedup;
 
 import me.equaferrous.allstockedup.utility.MessageSystem;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +20,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        removeEntities();
+
         MessageSystem.opBroadcast("Plugin disabled.");
     }
 
@@ -24,5 +29,17 @@ public class Main extends JavaPlugin {
 
     public static Plugin getPlugin() {
         return plugin;
+    }
+
+    // -------------------------------------------
+
+    private void removeEntities() {
+        for (World world : Bukkit.getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                if (entity.getScoreboardTags().contains(getPlugin().getName())) {
+                    entity.remove();
+                }
+            }
+        }
     }
 }
