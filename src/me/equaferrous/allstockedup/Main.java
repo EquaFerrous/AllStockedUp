@@ -1,8 +1,11 @@
 package me.equaferrous.allstockedup;
 
 import me.equaferrous.allstockedup.customers.CustomerController;
+import me.equaferrous.allstockedup.events.OpenShelfEvent;
+import me.equaferrous.allstockedup.shelves.ShelfController;
 import me.equaferrous.allstockedup.utility.MessageSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
@@ -16,8 +19,11 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
+        getServer().getPluginManager().registerEvents(new OpenShelfEvent(), this);
+
         MessageSystem.opBroadcast("Plugin enabled.");
         CustomerController.getInstance().createCustomer();
+        ShelfController.getInstance().createShelf(new Location(Bukkit.getWorlds().get(0), 5,2,4));
     }
 
     @Override
