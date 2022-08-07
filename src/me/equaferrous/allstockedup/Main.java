@@ -1,5 +1,6 @@
 package me.equaferrous.allstockedup;
 
+import me.equaferrous.allstockedup.customers.CustomerController;
 import me.equaferrous.allstockedup.utility.MessageSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -16,6 +17,7 @@ public class Main extends JavaPlugin {
         plugin = this;
 
         MessageSystem.opBroadcast("Plugin enabled.");
+        CustomerController.getInstance().createCustomer();
     }
 
     @Override

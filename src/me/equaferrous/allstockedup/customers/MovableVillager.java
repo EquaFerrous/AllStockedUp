@@ -1,6 +1,7 @@
 package me.equaferrous.allstockedup.customers;
 
 import me.equaferrous.allstockedup.Main;
+import me.equaferrous.allstockedup.utility.MessageSystem;
 import me.equaferrous.allstockedup.utility.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
