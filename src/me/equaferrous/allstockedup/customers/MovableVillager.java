@@ -48,6 +48,13 @@ public class MovableVillager {
         entity.setRotation(angle, 0);
     }
 
+    public void delete() {
+        entity.remove();
+        if (moveTask != null) {
+            moveTask.cancel();
+        }
+    }
+
     // --------------------------------
 
     private void checkToMove() {

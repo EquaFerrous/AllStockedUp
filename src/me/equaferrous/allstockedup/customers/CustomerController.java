@@ -12,9 +12,9 @@ import java.util.Random;
 public class CustomerController {
 
     private static CustomerController instance;
-    private static final Vector[] SPAWN_POINTS = new Vector[] {new Vector(-7,1,11), new Vector(11,1,11)};
-    private static final Vector DOOR_POS = new Vector(2,1,11);
-    private static final Vector COUNTER_POS = new Vector(2,1,5);
+    public static final Vector[] SPAWN_POINTS = new Vector[] {new Vector(-7,1,11), new Vector(11,1,11)};
+    public static final Vector DOOR_POS = new Vector(2,1,11);
+    public static final Vector COUNTER_POS = new Vector(2,1,5);
 
     private List<Customer> customerList = new ArrayList<>();
 
@@ -39,9 +39,13 @@ public class CustomerController {
         Customer newCustomer = new Customer(spawnPoint);
         customerList.add(newCustomer);
 
-        newCustomer.moveTo(DOOR_POS);
-        newCustomer.moveTo(COUNTER_POS);
-
         return newCustomer;
+    }
+
+    public void removeCustomer(Customer customer) {
+        if (customerList.contains(customer)) {
+            customer.delete();
+            customerList.remove(customer);
+        }
     }
 }
