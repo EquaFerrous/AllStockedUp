@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 
@@ -22,8 +23,7 @@ public class Customer extends MovableVillager{
 
     public Customer(Location spawnPoint) {
         super(spawnPoint);
-        order.put(Material.IRON_INGOT, 20);
-        setState(CustomerState.ENTER);
+        order.put(Material.IRON_INGOT, 5);
     }
 
     // -------------------------------------
@@ -37,8 +37,6 @@ public class Customer extends MovableVillager{
         switch (state) {
             case ENTER -> {
                 moveTo(CustomerController.DOOR_POS);
-                moveTo(CustomerController.COUNTER_POS);
-                setState(CustomerState.ORDER);
             }
             case ORDER -> {
                 orderTask = Bukkit.getScheduler().runTaskTimer(Main.getPlugin(), this::checkToCompleteOrder, 20, 20);
@@ -60,6 +58,11 @@ public class Customer extends MovableVillager{
             orderTask.cancel();
         }
     }
+
+    public CustomerState getState() {
+        return state;
+    }
+
 
     // -------------------------------------
 

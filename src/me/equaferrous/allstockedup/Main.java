@@ -1,6 +1,7 @@
 package me.equaferrous.allstockedup;
 
 import me.equaferrous.allstockedup.customers.CustomerController;
+import me.equaferrous.allstockedup.events.CustomerStartsOrderEvent;
 import me.equaferrous.allstockedup.events.OpenShelfEvent;
 import me.equaferrous.allstockedup.shelves.ShelfController;
 import me.equaferrous.allstockedup.utility.MessageSystem;
@@ -21,13 +22,13 @@ public class Main extends JavaPlugin {
         plugin = this;
 
         getServer().getPluginManager().registerEvents(new OpenShelfEvent(), this);
+        getServer().getPluginManager().registerEvents(new CustomerStartsOrderEvent(), this);
 
         MessageSystem.opBroadcast("Plugin enabled.");
-        CustomerController.getInstance().createCustomer();
         ShelfController.getInstance().createShelf(new Location(Bukkit.getWorlds().get(0), 5,2,4));
         ShelfController.getInstance().createShelf(new Location(Bukkit.getWorlds().get(0), 3,2,4));
 
-        //Bukkit.getScheduler().runTaskTimer(this, this::test, 200, 200);
+        Bukkit.getScheduler().runTaskTimer(this, this::test, 200, 200);
     }
 
     @Override
@@ -57,6 +58,7 @@ public class Main extends JavaPlugin {
     }
 
     private void test() {
-        MessageSystem.opBroadcast(String.valueOf(ShelfController.getInstance().removeItems(Material.IRON_INGOT, 10)));
+        MessageSystem.opBroadcast("Spawn");
+        CustomerController.getInstance().createCustomer();
     }
 }

@@ -1,7 +1,7 @@
 package me.equaferrous.allstockedup.customers;
 
 import me.equaferrous.allstockedup.Main;
-import me.equaferrous.allstockedup.utility.MessageSystem;
+import me.equaferrous.allstockedup.events.customevents.CustomerFinishedMovingEvent;
 import me.equaferrous.allstockedup.utility.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,6 +18,7 @@ public class MovableVillager {
     private final static int MOVE_DELAY = 1;
     private final static double MOVE_SPEED = 2; // Blocks per second
     private final static double MOVE_AMOUNT = MOVE_SPEED * ((double) MOVE_DELAY / 20); // Blocks per tick
+    private final static float DEFAULT_ROTATION = 180;
 
     private final Villager entity;
     private final List<Vector> pathList = new ArrayList<>();
@@ -91,6 +92,12 @@ public class MovableVillager {
             finishMoving();
         }
 
+        Vector currentPos = entity.getLocation().toVector();
+        Vector destPos = pathList.get(0);
+        moveDirection = new Vector(destPos.getX() - currentPos.getX(), destPos.getY() - currentPos.getY(), destPos.getZ() - currentPos.getZ()).normalize();
+        moveVelocity = new Vector().copy(moveDirection);
+        moveVelocity.multiply(MOVE_AMOUNT);
+
         entity.setVelocity(moveVelocity);
     }
 
@@ -105,6 +112,11 @@ public class MovableVillager {
 
         if (pathList.size() > 0) {
             startMoving();
+        }
+        else {
+            rotate(DEFAULT_ROTATION);
+            CustomerFinishedMovingEvent event = new CustomerFinishedMovingEvent(this);
+            Bukkit.getPluginManager().callEvent(event);
         }
     }
 
