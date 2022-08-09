@@ -15,7 +15,7 @@ public class CustomerStartsOrderEvent implements Listener {
         MovableVillager villager = event.getVillager();
         for (Customer customer : CustomerController.getInstance().getCustomerList()) {
             if (customer.equals(villager) && customer.getState() == CustomerState.ENTER) {
-                customer.setState(CustomerState.ORDER);
+                CustomerController.getInstance().startCustomerOrdering(customer);
             }
         }
     }

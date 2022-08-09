@@ -17,8 +17,6 @@ public class Customer extends MovableVillager{
     private CustomerState state;
     private final HashMap<Material, Integer> order = new HashMap<>();
 
-    private BukkitTask orderTask;
-
     // -------------------------------------
 
     public Customer(Location spawnPoint) {
@@ -39,7 +37,6 @@ public class Customer extends MovableVillager{
                 moveTo(CustomerController.DOOR_POS);
             }
             case ORDER -> {
-                orderTask = Bukkit.getScheduler().runTaskTimer(Main.getPlugin(), this::checkToCompleteOrder, 20, 20);
             }
             case LEFT_POSITIVE -> {
                 MessageSystem.opBroadcast("Customer complete.");
@@ -54,15 +51,17 @@ public class Customer extends MovableVillager{
 
     public void delete() {
         super.delete();
-        if (orderTask != null) {
-            orderTask.cancel();
-        }
     }
 
     public CustomerState getState() {
         return state;
     }
 
+    public void checkToCompleteOrder() {
+        if (completeOrder()) {
+            setState(CustomerState.LEFT_POSITIVE);
+        }
+    }
 
     // -------------------------------------
 
@@ -79,14 +78,4 @@ public class Customer extends MovableVillager{
         }
         return  orderComplete;
     }
-
-    private void checkToCompleteOrder() {
-        if (completeOrder()) {
-            orderTask.cancel();
-            orderTask = null;
-            setState(CustomerState.LEFT_POSITIVE);
-        }
-    }
-
-
 }

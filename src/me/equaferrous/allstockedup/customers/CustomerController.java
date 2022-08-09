@@ -1,7 +1,9 @@
 package me.equaferrous.allstockedup.customers;
 
+import me.equaferrous.allstockedup.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -29,15 +31,20 @@ public class CustomerController {
     };
 
     private final List<Customer> customerList = new ArrayList<>();
-    private final List<Customer> customersWaiting = new ArrayList<>();
+    private final List<Customer> customerPositions = new ArrayList<>();
     private final List<Customer> customerQueue = new ArrayList<>();
+    private final List<Customer> customersOrdering = new ArrayList<>();
+
+    private final BukkitTask checkCustomerOrdersTask;
 
     // ----------------------------
 
     public CustomerController() {
         for (Vector ignored : ORDER_POSITIONS) {
-            customersWaiting.add(null);
+            customerPositions.add(null);
         }
+
+        checkCustomerOrdersTask = Bukkit.getScheduler().runTaskTimer(Main.getPlugin(), this::checkCustomerOrdersTask, 20, 20);
     }
 
     // -----------------------------
@@ -56,11 +63,11 @@ public class CustomerController {
         Customer newCustomer = new Customer(spawnPoint);
         customerList.add(newCustomer);
 
-        for (int index = 0; index < customersWaiting.size(); index++) {
-            if (customersWaiting.get(index) == null) {
+        for (int index = 0; index < customerPositions.size(); index++) {
+            if (customerPositions.get(index) == null) {
                 newCustomer.setState(CustomerState.ENTER);
                 newCustomer.moveTo(ORDER_POSITIONS[index]);
-                customersWaiting.set(index, newCustomer);
+                customerPositions.set(index, newCustomer);
                 return newCustomer;
             }
         }
@@ -74,9 +81,10 @@ public class CustomerController {
             customer.delete();
             customerList.remove(customer);
             customerQueue.remove(customer);
+            customersOrdering.remove(customer);
 
-            if (customersWaiting.contains(customer)) {
-                customersWaiting.set(customersWaiting.indexOf(customer), null);
+            if (customerPositions.contains(customer)) {
+                customerPositions.set(customerPositions.indexOf(customer), null);
             }
 
             if (customerQueue.size() > 0) {
@@ -89,18 +97,30 @@ public class CustomerController {
         return customerList;
     }
 
+    public void startCustomerOrdering(Customer customer) {
+        customer.setState(CustomerState.ORDER);
+        customersOrdering.add(customer);
+    }
+
     // ------------------------------
 
     private void moveCustomerQueue() {
         Customer customer = customerQueue.get(0);
 
-        for (int index = 0; index < customersWaiting.size(); index++) {
-            if (customersWaiting.get(index) == null) {
+        for (int index = 0; index < customerPositions.size(); index++) {
+            if (customerPositions.get(index) == null) {
                 customer.setState(CustomerState.ENTER);
                 customer.moveTo(ORDER_POSITIONS[index]);
-                customersWaiting.set(index, customer);
+                customerPositions.set(index, customer);
                 customerQueue.remove(customer);
             }
+        }
+    }
+
+    private void checkCustomerOrdersTask() {
+        List<Customer> tempList = new ArrayList<>(customersOrdering);
+        for (Customer customer : tempList) {
+            customer.checkToCompleteOrder();
         }
     }
 
